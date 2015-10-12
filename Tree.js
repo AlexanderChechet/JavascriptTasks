@@ -17,7 +17,8 @@ function BinaryTree()
 }
 
 
-BinaryTree.prototype = {
+BinaryTree.prototype = 
+{
 	AddNode : function(data)
 	{
 		if (this.root == null)
@@ -26,7 +27,7 @@ BinaryTree.prototype = {
 		}
 		else
 		{
-			if (this.root.data < data)
+			if (data < this.root.data)
 			{
 				this.root.left.AddNode(data);
 			}
@@ -35,14 +36,59 @@ BinaryTree.prototype = {
 				this.root.right.AddNode(data);
 			}
 		}
+	},
+	
+	RemoveNode : function(data)
+	{
+		if (this.root == null)
+			throw 42;
+		if (this.root.data == data)
+		{
+			var current = this.root;
+			if (current.left.root == null && current.right.root == null)
+			{
+				this.root = null;
+				delete current;
+			}
+			else if (current.left.root == null)
+			{
+				this.root = current.right.root;
+				delete current;
+			}
+			else if (current.right.root == null)
+			{
+				this.root = current.left.root;
+				delete current;
+			}
+			else
+			{
+				var temp = current.right.root;
+				while (temp.left.root != null)
+				{
+					temp = temp.left.root;
+				}
+				this.root.data = temp.data;
+				delete temp;
+			}
+		}
+		else if (data < this.root.data)
+		{
+			this.root.left.RemoveNode(data);
+		}
+		else
+		{
+			this.root.right.RemoveNode(data);
+		}
 	}
 }
 
 var tree = BinaryTree();
-tree.AddNode(10);
-tree.AddNode(5);
-tree.AddNode(15);
+tree.AddNode(8);
+tree.AddNode(4);
 tree.AddNode(12);
-tree.AddNode(7);
 tree.AddNode(2);
+tree.AddNode(6);
+tree.AddNode(10);
+tree.AddNode(14);
+tree.RemoveNode(4);
 console.log(tree);
