@@ -1,0 +1,71 @@
+https://jsfiddle.net/ef9dq8uc/2/
+
+//thml window
+<body>
+<table class = "colorTable" id="supertable">
+    <tr>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>5</td>
+        <td>6</td>
+    </tr>
+    <tr>
+        <td>7</td>
+        <td>8</td>
+        <td>9</td>
+    </tr>
+</table>
+</body>
+
+
+//js window
+var table = document.getElementById("supertable");
+if (table != null) {
+    for (var i = 0; i < table.rows.length; i++) {
+        for (var j = 0; j < table.rows[i].cells.length; j++)
+        table.rows[i].cells[j].onclick = function () {
+            changeColor(this);
+        };
+    }
+}
+
+function changeColor(tableCell) {
+    var style = getComputedStyle(tableCell);
+	var colorRgb = style.backgroundColor;
+    var colorHex = rgb2hex(colorRgb);
+    if (colorHex == '#ff0000')
+    {
+        tableCell.style.backgroundColor = '#0000ff';
+    }
+    else
+    {
+        tableCell.style.backgroundColor = '#ff0000';
+    }
+}
+
+function rgb2hex(rgb) {
+    rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+    function hex(x) {
+        return ("0" + parseInt(x).toString(16)).slice(-2);
+    }
+    return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+}
+
+
+
+//css window
+.colorTable {
+    border : 4px double green;
+}
+
+.colorTable tr td{
+    width : 100px;
+    height : 100px;
+    text-align : center;
+    background-color : #ff0000;
+}
+</css>
